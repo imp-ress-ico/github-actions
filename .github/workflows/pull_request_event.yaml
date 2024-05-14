@@ -1,4 +1,4 @@
-name: PR Description, Target Checker, Version, and Close the PR having DO NOT MERGE LABEL
+name: PR Check
 
 on:
   pull_request:
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: PR Description, Target Checker, Version, and Close the PR having DO NOT MERGE LABEL
+      - name:  Version Check
         id: latestTag
         run: |
           if [ -f "VERSION" ]; then
