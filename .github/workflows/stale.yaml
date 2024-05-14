@@ -1,19 +1,22 @@
+#  Description: This workflow is scheduled to check for stale pull requests and close them after two days of inactivity.
 name: Stale Pull Requests
 on:
+  #push:
   schedule:
-    - cron: '0 09 * * *' # scheduler runs every day at 9:00am UTC
-
+   - cron: '0 9 * * *' # scheduler runs every day at 9:00am UTC
 permissions: write-all
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-  REPO_NAME: ${{ github.repository }}
-
+     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+     REPO_NAME: ${{ github.repository }}
+     EVENT_CHECK_VARIABLE: 'stale'
+     WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK}}
+   
 jobs:
-  Stale-PR:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Stale PR
-        uses: ./    
+    Stale-PR:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Checkout
+           uses: actions/checkout@v3
+         - name: Stale PR
+           uses: ./ 

@@ -1,20 +1,16 @@
-name: check if notification is sent to gchat
+name: Google-Chat-Integration
 
 on:
-  pull_request:
-    types: [opened, edited, reopened , closed]
-  issue_comment:
+  repository_dispatch:
+    types: [trigger-gchat]
 
 permissions: write-all
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REPO_NAME: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
-  EVENT: ${{ github.event.action }} 
   WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
 
- 
 jobs:
   Google-Chat-Integration:
     runs-on: ubuntu-latest
@@ -23,3 +19,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Google Chat Integration
         uses: ./
+        with:
+          EVENT_CHECK_VARIABLE: ${{ github.event.client_payload.EVENT_CHECK_VARIABLE }}
+          PR_NUMBER: ${{ github.event.client_payload.PR_NUMBER }}
+          VERSION_FILE: ${{ github.event.client_payload.VERSION_FILE}}
