@@ -1,65 +1,37 @@
-name: "Main action file of Docker container actions"
+name: "Main action file of Docker container"
 description: "Docker container actions"
 
 inputs:
-  GITHUB_TOKEN:
-    description: "Token used to access repo"
-    required: false
-  owner:
-    description: owner name
-    default: ${{ github.repository_owner }}
-    required: false 
-  repo:
-    description: repository name
-    default: ${{ github.repository }}
-    required: false 
-  base:
-    description: Base URI
-    default: "https://api.github.com"
-    required: false  
-  head_ref:  
-    description: Head Refer branch
-    default: ${{ contains(github.head_ref, 'release') }}
-    required: false
-  base_ref:
-    description: Base Refer branch
-    default: ${{ contains(github.base_ref, 'master') }}
-    required: false  
-  pr_description:
-    description: PR description
-    required: false  
-  pr_number:
-    description: PR number
-    required: false
-  merge_pr:
-    description: PR number
-    required: false
-  close_pr:
-    description: PR number
-    required: false  
-  version_file:
-    description: contents from version file
-    required: false  
-  event: 
-    description: event type 
-    required: false
-  webhook:
-    description: webhook URL
-    required: false
-    
+  job:
+    description: region of ec2 in aws
+    required: true
+  aws_region:
+    description: region of ec2 in aws
+    required: true
+  aws_access_key_id:
+    description: access key id of IAM user in aws
+    required: true
+  aws_secret_access_key:
+    description: secret access key of IAM user in aws
+    required: true
+  instance_id:
+    description: region of ec2 in aws
+    required: true
+  working_dir:
+    description: region of ec2 in aws
+    required: true
+  commands:
+    description: region of ec2 in aws
+    required: true
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    REPO_OWNER: ${{ inputs.owner }}
-    REPO_NAME: ${{ inputs.repo }}
-    BASE_URI: ${{ inputs.base }}
-    HEAD_REF: ${{ inputs.head_ref }}
-    BASE_REF: ${{ inputs.base_ref }}
-    PR_DESCRIPTION: ${{ inputs.pr_description }}
-    PR_NUMBER: ${{ inputs.pr_number }}
-    MERGE_PR: ${{ inputs.merge_pr }}
-    CLOSE_PR: ${{ inputs.close_pr }}
-    VERSION_FILE: ${{ inputs.version_file }}
-    EVENT: ${{ inputs.event }}
-    WEBHOOK: ${{ inputs.webhook }}
+    JOB: ${{ inputs.job }}
+    AWS_REGION: ${{ inputs.aws_region }}
+    AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
+    AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
+    INSTANCE_ID: ${{ inputs.instance_id }}
+    WORKING_DIR: ${{ inputs.working_dir }}
+    COMMANDS: ${{ inputs.commands }}

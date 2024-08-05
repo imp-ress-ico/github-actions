@@ -1,0 +1,24 @@
+name: 'send bash command to ec2 using ssm'
+
+on: ["push" , "workflow_dispatch"]
+      
+permissions: write-all    
+      
+env:
+  JOB: AWS_SSM
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  INSTANCE_ID: i-02e1c1f4a86f2b6aa
+  WORKING_DIR: /home/ubuntu/
+  COMMANDS: "touch manish12345.txt"
+ 
+jobs:
+  AWS_SSM:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: ssm-send-command
+        uses: ./

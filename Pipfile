@@ -4,4 +4,4 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-PyGithub = "*"
+boto3 = "*"
