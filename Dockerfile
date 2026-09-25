@@ -1,5 +1,8 @@
-FROM python:3.8-slim-buster
-WORKDIR /chatops
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --omit=dev || true
 COPY . .
-RUN chmod +x script.sh
-CMD cd /chatops && ./script.sh
+EXPOSE 3000
+USER node          # node:alpine ships a built-in non-root "node" user
+CMD ["node", "src/index.js"]
