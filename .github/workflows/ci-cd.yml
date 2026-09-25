@@ -1,5 +1,5 @@
 name: CI/CD Pipeline
-# Full pipeline: lint + secrets + code scan -> build -> image scan -> ECR push
+# Full pipeline: lint + secrets + code scan -> build -> image scan -> ECR push.
 on:
   push: { branches: [ devops/684 ] }
   workflow_dispatch:
