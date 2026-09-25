@@ -12,25 +12,25 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: impressico-testingwork/shared_repo/.github/actions/lint-workflows@main
+      - uses: imp-ress-ico/shared-repo/.github/actions/lint-workflows@main
 
   secrets-scan:
-    uses: impressico-testingwork/shared_repo/.github/workflows/secrets-scan.yml@main
+    uses: imp-ress-ico/shared-repo/.github/workflows/secrets-scan.yml@main
     with: { fail-on-findings: false }
 
   code-scan:
-    uses: impressico-testingwork/shared_repo/.github/workflows/code-scan.yml@main
+    uses: imp-ress-ico/shared-repo/.github/workflows/code-scan.yml@main
     with: { fail-on-findings: true }
 
   build:
     needs: [lint, secrets-scan, code-scan]     # gate: build only if all pass
-    uses: impressico-testingwork/shared_repo/.github/workflows/docker-build.yml@main
+    uses: imp-ress-ico/shared-repo/.github/workflows/docker-build.yml@main
     with:
       image-name: poc-microservice-node
 
   scan:
     needs: build
-    uses: impressico-testingwork/shared_repo/.github/workflows/image-scan.yml@main
+    uses: imp-ress-ico/shared-repo/.github/workflows/image-scan.yml@main
     with:
       image-artifact: ${{ needs.build.outputs.image-artifact }}
       image-ref:      ${{ needs.build.outputs.image-ref }}
@@ -38,7 +38,7 @@ jobs:
 
   push:
     needs: [build, scan]
-    uses: impressico-testingwork/shared_repo/.github/workflows/ecr-push.yml@main
+    uses: imp-ress-ico/shared-repo/.github/workflows/ecr-push.yml@main
     with:
       image-artifact: ${{ needs.build.outputs.image-artifact }}
       image-ref:      ${{ needs.build.outputs.image-ref }}
