@@ -12,25 +12,25 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: imp-ress-ico/shared-repo/.github/actions/lint-workflows@devops/shared/684
+      - uses: imp-ress-ico/shared-repo/.github/actions/lint-workflows@master
 
   secrets-scan:
-    uses: imp-ress-ico/shared-repo/.github/workflows/secrets-scan.yml@devops/shared/684
+    uses: imp-ress-ico/shared-repo/.github/workflows/secrets-scan.yml@master
     with: { fail-on-findings: false }
 
   code-scan:
-    uses: imp-ress-ico/shared-repo/.github/workflows/code-scan.yml@devops/shared/684
+    uses: imp-ress-ico/shared-repo/.github/workflows/code-scan.yml@master
     with: { fail-on-findings: false }
 
   build:
     needs: [lint, secrets-scan, code-scan]     # gate: build only if all pass
-    uses: imp-ress-ico/shared-repo/.github/workflows/docker-build.yml@devops/shared/684
+    uses: imp-ress-ico/shared-repo/.github/workflows/docker-build.yml@master
     with:
       image-name: poc-microservice-node
 
   scan:
     needs: build
-    uses: imp-ress-ico/shared-repo/.github/workflows/image-scan.yml@devops/shared/684
+    uses: imp-ress-ico/shared-repo/.github/workflows/image-scan.yml@master
     with:
       image-artifact: ${{ needs.build.outputs.image-artifact }}
       image-ref:      ${{ needs.build.outputs.image-ref }}
@@ -38,7 +38,7 @@ jobs:
 
   push:
     needs: [build, scan]
-    uses: imp-ress-ico/shared-repo/.github/workflows/ecr-push.yml@devops/shared/684
+    uses: imp-ress-ico/shared-repo/.github/workflows/ecr-push.yml@master
     with:
       image-artifact: ${{ needs.build.outputs.image-artifact }}
       image-ref:      ${{ needs.build.outputs.image-ref }}
